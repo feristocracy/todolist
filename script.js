@@ -31,6 +31,8 @@ const setTask = e =>    { //agregamos el valor a un objeto de task
                         const task =  {
 																			id: Date.now(),
 																			text: input.value,
+																			dateStart: Date(Date.now()).toString().substr(4, 20),
+																			//dateFinish, 
 																			status: false
 																			}
 
@@ -53,16 +55,18 @@ const drawTasks = () => {
                         Object.values(tasks).forEach(task =>{
                                                             const clone = template.cloneNode(true);  // CLONAR EL TEMPLATE ANTES QUE NADA
                                                             clone.querySelector("p").textContent = task.text;
+                                                            clone.querySelector("small").textContent = "Created on " + task.dateStart;
 
 																														if(task.status)	{ // si el estado de la tarea es true
 																																						clone.querySelector(".alert").classList.replace("alert-warning", "alert-secondary");
 																																						clone.querySelector(".text-success").classList.replace("fa-circle-check", "fa-rotate-left");
 																																						clone.querySelector(".text-success").classList.replace("text-success", "text-primary");
+																																						clone.querySelector("small").textContent = "Completed on " + task.dateFinish;
 																																						clone.querySelector(".alert p").classList.add("text-decoration-line-through");
 																																						}
-
+																														clone.getElementById("date").dataset.id = task.id;
 																														clone.querySelectorAll(".fas")[0].dataset.id = task.id; //hace referencia al botón verde
-																														clone.querySelectorAll(".fas")[1].dataset.id = task.id; //hace referencia al botón verde
+																														clone.querySelectorAll(".fas")[1].dataset.id = task.id; //hace referencia al botón rojo
                                                             fragment.appendChild(clone);
                                                             })
                         tasklist.appendChild(fragment); //fragment recomendado en los forEach
@@ -72,10 +76,11 @@ const drawTasks = () => {
 const botAccion = e =>{
 											if (e.target.classList.contains("fa-circle-check"))	{ // si le damos click al circulo de palomita
 																																					tasks[e.target.dataset.id].status = true;
+																																					tasks[e.target.dataset.id].dateFinish = Date(Date.now()).toString().substr(4, 20);
 																																					drawTasks();
 																																					return
 																																					}
-											if (e.target.classList.contains("fa-rotate-left"))	{ // si le damos click al circulo de palomita
+											if (e.target.classList.contains("fa-rotate-left"))	{ // si le damos click al circulo de retorno
 																																					tasks[e.target.dataset.id].status = false;
 																																					drawTasks();
 																																					return
