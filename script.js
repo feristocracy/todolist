@@ -1,3 +1,4 @@
+import{saveTasksDB, getTaskDB} from "/todolist/firebase.js";
 /*-----------------CONSTANTES--------------------*/
 const form = document.getElementById("form");
 const tasklist = document.getElementById("tasklist");
@@ -8,10 +9,7 @@ const input = document.querySelector("input");
 
 let tasks = { }; //Inicializamos la colección de objetos
 
-document.addEventListener("DOMContentLoaded", () => {
-                          if (localStorage.getItem("tasks")){tasks = JSON.parse(localStorage.getItem("tasks"));} // si hay un objeto de tareas guardadas en el local storage
-													drawTasks();
-													});
+tasks = JSON.parse(getTaskDB());
 
 tasklist.addEventListener("click", e => {
 																				botAccion(e);
@@ -46,7 +44,9 @@ const setTask = e =>    { //agregamos el valor a un objeto de task
                         }
 
 const drawTasks = () => {
-                        localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
+                        //localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
+						//db.collection("todo-items").add({JSON.stringify(tasks)});
+												saveTasksDB(JSON.stringify(tasks));
 												if(Object.values(tasks).length === 0){ // si no hay nada en la lista
 																														tasklist.innerHTML = `<div class="alert alert-light text-center">No tasks... 🏝</div>`;
 																														return
@@ -93,3 +93,5 @@ const botAccion = e =>{
 
 											e.stopPropagation();
 											}
+
+											drawTasks();
