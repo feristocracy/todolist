@@ -1,0 +1,33 @@
+{
+    "type": "database",
+    "name": "testdb",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "todolist",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE todolist (json text)",
+            "columns": [
+                {
+                    "name": "json",
+                    "type": "text"
+                }
+            ],
+            "rows": [
+                [
+                    "probando"
+                ],
+                [
+                    "probando2"
+                ],
+                [
+                    "probando3"
+                ],
+                [
+                    "probando4"
+                ]
+            ]
+        }
+    ]
+}

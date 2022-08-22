@@ -1,4 +1,4 @@
-import{saveTasksDB, getTaskDB} from "/todolist/firebase.js";
+
 /*-----------------CONSTANTES--------------------*/
 const form = document.getElementById("form");
 const tasklist = document.getElementById("tasklist");
@@ -9,7 +9,7 @@ const input = document.querySelector("input");
 
 let tasks = { }; //Inicializamos la colección de objetos
 
-tasks = JSON.parse(getTaskDB());
+//tasks = JSON.parse(getTaskDB());
 
 tasklist.addEventListener("click", e => {
 																				botAccion(e);
@@ -19,6 +19,24 @@ form.addEventListener("submit", e =>{ // Escucha el evento de presionar botón d
                                     e.preventDefault(); // Sirve para evitar el comportamiento por default de algún elemento en html
                                     setTask(e);
                                     })
+
+const fetchData = async () =>   { // función para captar los datos del archivo json y guardarlos en fetchData
+								try {
+									const res = await fetch('datos.json');
+									const datos = await res.json();
+									console.log(datos.objects[0].rows[0]);
+									} catch (error) {
+												console.log(error);
+												}
+	
+								/* let res=await fetch('file:///C:/Users/fernando.maldonado/Pictures/database_files/testdb.db');
+								let arrayBuffer=await res.arrayBuffer();
+								let uInt8Array=new Uint8Array(arrayBuffer);
+								let db=new SQL.Database(uInt8Array);
+								console.log("db loaded"); */
+								} //end fetchData
+
+fetchData();
 
 const setTask = e =>    { //agregamos el valor a un objeto de task
                         if(input.value.trim() === "")   {
@@ -46,7 +64,7 @@ const setTask = e =>    { //agregamos el valor a un objeto de task
 const drawTasks = () => {
                         //localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
 						//db.collection("todo-items").add({JSON.stringify(tasks)});
-												saveTasksDB(JSON.stringify(tasks));
+												//saveTasksDB(JSON.stringify(tasks));
 												if(Object.values(tasks).length === 0){ // si no hay nada en la lista
 																														tasklist.innerHTML = `<div class="alert alert-light text-center">No tasks... 🏝</div>`;
 																														return
@@ -95,3 +113,5 @@ const botAccion = e =>{
 											}
 
 											drawTasks();
+
+
