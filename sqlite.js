@@ -6,11 +6,14 @@ const db = new sqlite3.Database("./testdb.db", sqlite3.OPEN_READWRITE, (err) => 
                                         console.log("conexión exitosa");
                                         });
 
-/* db.run  (
+db.all("SELECT * FROM todolist", [], (err, rows) => {
+                        if (err) return console.error(err.message);
+                        rows.forEach((row) =>   {
+                                                console.log(row);
+                                                });
+                        });
 
-        ) */
 
-
-/* db.close((err) =>   {
+db.close((err) =>   {
                     if (err) return console.error(err.message);
-                    }) */
+                    })
