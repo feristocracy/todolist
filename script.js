@@ -1,4 +1,4 @@
-
+//import {storageSql, readSql} from "./sqlite.js";
 /*-----------------CONSTANTES--------------------*/
 const form = document.getElementById("form");
 const tasklist = document.getElementById("tasklist");
@@ -7,9 +7,37 @@ const fragment = document.createDocumentFragment();
 const input = document.querySelector("input");
 /*----------------------------------------------------*/
 
+/*----------------------- SQLITE AND EXPRESS ----------------------*/
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("./testdb.db", sqlite3.OPEN_READWRITE, (err) => {
+																				if (err) return console.error(err.message);
+																				console.log("conexión exitosa");
+																				});
+app.use(bodyParser.json());
+app.post("/", (req,res) =>	{
+										try {
+											console.log(req.body.movie);
+											return res.json({
+												status: 200,
+												success: true,
+											});
+										} catch (error) {
+											return res.json({
+												status: 400,
+												success: false,
+											})
+											
+										}
+										})
+app.listen(3000);																				
+
+/*----------------------- TASKSCODE ----------------------*/
 let tasks = { }; //Inicializamos la colección de objetos
 
-//tasks = JSON.parse(getTaskDB());
+tasks = JSON.parse(readSql());
 
 tasklist.addEventListener("click", e => {
 																				botAccion(e);
@@ -20,23 +48,6 @@ form.addEventListener("submit", e =>{ // Escucha el evento de presionar botón d
                                     setTask(e);
                                     })
 
-const fetchData = async () =>   { // función para captar los datos del archivo json y guardarlos en fetchData
-								try {
-									const res = await fetch('datos.json');
-									const datos = await res.json();
-									console.log(datos.objects[0].rows[0]);
-									} catch (error) {
-												console.log(error);
-												}
-	
-								/* let res=await fetch('file:///C:/Users/fernando.maldonado/Pictures/database_files/testdb.db');
-								let arrayBuffer=await res.arrayBuffer();
-								let uInt8Array=new Uint8Array(arrayBuffer);
-								let db=new SQL.Database(uInt8Array);
-								console.log("db loaded"); */
-								} //end fetchData
-
-fetchData();
 
 const setTask = e =>    { //agregamos el valor a un objeto de task
                         if(input.value.trim() === "")   {
@@ -62,6 +73,7 @@ const setTask = e =>    { //agregamos el valor a un objeto de task
                         }
 
 const drawTasks = () => {
+						storageSql(JSON.stringify(tasks));
                         //localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
 						//db.collection("todo-items").add({JSON.stringify(tasks)});
 												//saveTasksDB(JSON.stringify(tasks));
