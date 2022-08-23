@@ -16,7 +16,11 @@
         <h1 class="text-center my-5">To-Do App🎯</h1>
         <form id="form">
             <input type="text" placeholder="Add task" class="form-control my-2" autofocus>
-            <button class="btn w-100 btn-primary" type="submit">➕ Add</button>
+            <button class="btn w-100 btn-primary mb-2" type="submit">➕ Add</button>
+            <input type="file" id="loadFile" hidden="hidden" />
+            <button class="btn w-100 btn-success mb-2" id="loadFile2">⬆ Load</button>
+            <input type="file" id="exportFile" hidden="hidden" onclick="download()" />
+            <button class="btn w-100 btn-warning mb-2" id="exportFile2">⬇ Download</button>
         </form>
         <div id="tasklist" class="mt-3"></div>
     </div>
