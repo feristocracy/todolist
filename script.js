@@ -30,8 +30,6 @@ const download = function(data) { // descarga el archivo en formato csv
 
 
 //--------------------TASKS---------------------//
-
-
 document.addEventListener("DOMContentLoaded", () => {
 													/* if (localStorage.getItem("tasks"))	{
 																						tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -122,9 +120,7 @@ const botAccion = e =>	{
 						}
 
 
-						//CARGAR ARCHIVO//
-
-
+//CARGAR ARCHIVO//
 const storageContent = content =>	{
 									tasks = JSON.parse(content);
 									console.log(tasks);
