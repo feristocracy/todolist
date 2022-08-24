@@ -31,9 +31,9 @@ const download = function(data) { // descarga el archivo en formato csv
 
 //--------------------TASKS---------------------//
 document.addEventListener("DOMContentLoaded", () => {
-													/* if (localStorage.getItem("tasks"))	{
+													if (localStorage.getItem("tasks"))	{
 																						tasks = JSON.parse(localStorage.getItem("tasks"));
-																						} */ // si hay un objeto de tareas guardadas en el local storage					
+																						} // si hay un objeto de tareas guardadas en el local storage					
 													drawTasks();
 													});
 
@@ -69,7 +69,7 @@ const setTask = e =>    { //agregamos el valor a un objeto de task
                         }
 
 const drawTasks = () => {
-                        //localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
+                        localStorage.setItem("tasks", JSON.stringify(tasks)); //guardamos la lista de tareas en el localstorage
 						
 						
 						if(Object.values(tasks).length === 0)	{ // si no hay nada en la lista
